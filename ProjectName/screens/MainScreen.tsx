@@ -8,9 +8,8 @@ import {
 import LargeIconButton from '../components/LargeIconButton.tsx';
 
 const MainScreen: React.FC = () => {
-    const {configurationLoaded, loadConfiguration} = useContext(
-        ConfigurationContext,
-    ) as ConfigurationContextType;
+    const {configurationLoaded, loadConfiguration, dummyFlag, dummyValue} =
+        useContext(ConfigurationContext) as ConfigurationContextType;
 
     useEffect(() => {
         loadConfiguration();
@@ -44,7 +43,28 @@ const MainScreen: React.FC = () => {
                     labelStyle={styles.buttonsLabels}
                 />
             </View>
-            {configurationLoaded && <Text>Configuration has been loaded</Text>}
+            {configurationLoaded && (
+                <View>
+                    <Text style={{...styles.basicText, paddingVertical: 10}}>
+                        Configuration has been loaded
+                    </Text>
+                </View>
+            )}
+            {dummyFlag && (
+                <View style={styles.dummySection}>
+                    <Text
+                        style={{
+                            ...styles.basicText,
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                        }}>
+                        This section can be toggled in settings.
+                    </Text>
+                    <Text style={styles.basicText}>
+                        The dummyValue is: {dummyValue}
+                    </Text>
+                </View>
+            )}
         </ScreenBase>
     );
 };
@@ -56,6 +76,7 @@ const styles = StyleSheet.create({
     },
     largeButtonRow: {
         flexDirection: 'row',
+        justifyContent: 'center',
     },
     buttonsStyle: {
         backgroundColor: 'lightgoldenrodyellow',
@@ -69,6 +90,10 @@ const styles = StyleSheet.create({
     },
     buttonsIcons: {
         color: 'lightblue',
+    },
+    dummySection: {
+        backgroundColor: '#2d2',
+        padding: 10,
     },
 });
 
